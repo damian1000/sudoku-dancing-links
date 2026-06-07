@@ -43,7 +43,7 @@ Each of the 9×9×9 = 729 candidate placements (row, column, digit) is a row in 
 |---|---|---|
 | Cell | 81 | each cell × one digit |
 | Row | 81 | each row × each digit |
-| Column | 81 | each row × each digit |
+| Column | 81 | each column × each digit |
 | Box | 81 | each 3×3 box × each digit |
 
 Total: 729 rows × 324 columns. Algorithm X picks the column with fewest remaining 1s (the **S-heuristic**), tries each row covering that column, recurses, then uncovers on backtrack.
