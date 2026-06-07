@@ -6,6 +6,7 @@ import io.github.damian1000.sudoku.dancing.DancingLinksSudokuSolver;
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class SudokuSolverTest {
@@ -42,6 +43,26 @@ class SudokuSolverTest {
         int[][] viaBacktracking = new BacktrackingSudokuSolver().solve(HARD_PUZZLE);
         int[][] viaDancingLinks = new DancingLinksSudokuSolver().solve(HARD_PUZZLE);
         assertArrayEquals(viaBacktracking, viaDancingLinks);
+    }
+
+    @Test
+    void unsolvableBoardThrowsForBothSolvers() {
+        // Two 1s in row 0 — no valid completion exists.
+        int[][] unsolvable = {
+                {1, 1, 0, 0, 0, 0, 0, 0, 0},
+                {0, 0, 0, 0, 0, 0, 0, 0, 0},
+                {0, 0, 0, 0, 0, 0, 0, 0, 0},
+                {0, 0, 0, 0, 0, 0, 0, 0, 0},
+                {0, 0, 0, 0, 0, 0, 0, 0, 0},
+                {0, 0, 0, 0, 0, 0, 0, 0, 0},
+                {0, 0, 0, 0, 0, 0, 0, 0, 0},
+                {0, 0, 0, 0, 0, 0, 0, 0, 0},
+                {0, 0, 0, 0, 0, 0, 0, 0, 0}
+        };
+        assertThrows(IllegalArgumentException.class,
+                () -> new BacktrackingSudokuSolver().solve(unsolvable));
+        assertThrows(IllegalArgumentException.class,
+                () -> new DancingLinksSudokuSolver().solve(unsolvable));
     }
 
     @Test
