@@ -1,4 +1,4 @@
-package sudoku.dancing;
+package io.github.damian1000.sudoku.dancing;
 
 import java.util.ArrayList;
 import java.util.LinkedList;

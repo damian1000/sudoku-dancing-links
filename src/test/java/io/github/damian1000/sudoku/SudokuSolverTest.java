@@ -1,7 +1,7 @@
-package sudoku;
+package io.github.damian1000.sudoku;
 
 import org.junit.jupiter.api.Test;
-import sudoku.dancing.DancingLinksSudokuSolver;
+import io.github.damian1000.sudoku.dancing.DancingLinksSudokuSolver;
 
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;

@@ -1,6 +1,6 @@
-package sudoku.dancing;
+package io.github.damian1000.sudoku.dancing;
 
-import sudoku.dancing.DancingNode;
+import io.github.damian1000.sudoku.dancing.DancingNode;
 
 class ColumnNode extends DancingNode {
     int size;

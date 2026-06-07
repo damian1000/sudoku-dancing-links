@@ -1,4 +1,4 @@
-package sudoku;
+package io.github.damian1000.sudoku;
 
 import java.util.stream.IntStream;
 

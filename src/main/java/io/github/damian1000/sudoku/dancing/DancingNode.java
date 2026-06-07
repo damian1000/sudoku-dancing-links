@@ -1,4 +1,4 @@
-package sudoku.dancing;
+package io.github.damian1000.sudoku.dancing;
 
 class DancingNode {
     DancingNode L, R, U, D;
