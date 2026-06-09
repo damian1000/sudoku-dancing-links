@@ -1,6 +1,7 @@
 plugins {
     id 'java'
     id 'jacoco'
+    id 'com.diffplug.spotless' version '7.0.4'
 }
 
 version = '1.0.0'
@@ -31,6 +32,33 @@ jacocoTestReport {
     reports {
         xml.required = true
         html.required = true
+    }
+}
+
+jacocoTestCoverageVerification {
+    dependsOn jacocoTestReport
+    violationRules {
+        rule {
+            limit {
+                counter = 'INSTRUCTION'
+                value = 'COVEREDRATIO'
+                minimum = 0.90
+            }
+        }
+    }
+}
+
+check.dependsOn jacocoTestCoverageVerification
+
+spotless {
+    java {
+        target 'src/**/*.java'
+        // Structural formatters (google-java-format / palantir-java-format) rely
+        // on internal javac APIs that changed in JDK 25; falling back to
+        // JDK-agnostic hygiene rules until upstream catches up.
+        removeUnusedImports()
+        trimTrailingWhitespace()
+        endWithNewline()
     }
 }
 

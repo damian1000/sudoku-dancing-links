@@ -1,8 +1,8 @@
 # Sudoku Dancing Links
 
 [![CI](https://github.com/damian1000/sudoku-dancing-links/actions/workflows/ci.yml/badge.svg)](https://github.com/damian1000/sudoku-dancing-links/actions/workflows/ci.yml)
+[![CodeQL](https://github.com/damian1000/sudoku-dancing-links/actions/workflows/codeql.yml/badge.svg)](https://github.com/damian1000/sudoku-dancing-links/actions/workflows/codeql.yml)
 [![codecov](https://codecov.io/gh/damian1000/sudoku-dancing-links/graph/badge.svg)](https://codecov.io/gh/damian1000/sudoku-dancing-links)
-[![JDK](https://img.shields.io/badge/jdk-25-orange)](https://openjdk.org/projects/jdk/25/)
 
 Two Sudoku solvers side by side: naive backtracking and Knuth's **Dancing Links** (Algorithm X). Same input, same output, very different work.
 
