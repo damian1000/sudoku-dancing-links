@@ -1,4 +1,5 @@
 version: 2
+# touch to force a Dependabot re-scan (auto-merge end-to-end test)
 updates:
   - package-ecosystem: "gradle"
     directory: "/"
