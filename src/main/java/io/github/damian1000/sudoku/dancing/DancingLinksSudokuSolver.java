@@ -1,6 +1,7 @@
 package io.github.damian1000.sudoku.dancing;
 
 import java.util.Arrays;
+import java.util.List;
 
 /**
  * Sudoku solver built on top of Knuth's Dancing Links (Algorithm X).
@@ -30,11 +31,29 @@ public class DancingLinksSudokuSolver {
         boolean[][] cover = initializeExactCoverBoard(input);
         DancingLinks dlx = new DancingLinks(cover);
         dlx.runSolver();
-        int[][] solution = dlx.getSolution();
-        if (solution == null) {
+        List<List<Integer>> answerRows = dlx.getAnswerRows();
+        if (answerRows == null) {
             throw new IllegalArgumentException("No solution exists for the given board");
         }
-        return solution;
+        return decode(answerRows);
+    }
+
+    /**
+     * Maps each selected cover row back onto the grid. A row's ascending column indices are the
+     * [cell, row, column, box] constraints it satisfies; the cell constraint (0..80) encodes the
+     * position and the row constraint (81..161) encodes the digit.
+     */
+    private int[][] decode(List<List<Integer>> answerRows) {
+        int[][] result = new int[BOARD_SIZE][BOARD_SIZE];
+        for (List<Integer> columns : answerRows) {
+            int cellConstraint = columns.get(0);
+            int rowConstraint = columns.get(1);
+            int row = cellConstraint / BOARD_SIZE;
+            int column = cellConstraint % BOARD_SIZE;
+            int digit = (rowConstraint % BOARD_SIZE) + 1;
+            result[row][column] = digit;
+        }
+        return result;
     }
 
     private int getIndex(int row, int column, int num) {

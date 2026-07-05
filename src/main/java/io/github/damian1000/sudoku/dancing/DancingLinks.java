@@ -1,7 +1,7 @@
 package io.github.damian1000.sudoku.dancing;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -15,32 +15,38 @@ import java.util.List;
  * Column selection uses the S-heuristic: pick the column with the fewest
  * remaining 1s. This prunes the search tree aggressively because we recurse
  * into the most constrained subproblem first.
+ * <p>
+ * This class knows nothing about Sudoku: it consumes a boolean cover matrix and
+ * reports the chosen rows as column-index sets. Interpreting those rows back
+ * into a domain (a Sudoku grid, a pentomino tiling, ...) is the caller's job.
  */
 public class DancingLinks {
 
-    private static final int SUDOKU_SIZE = 9;
-
     private final ColumnNode header;
     private List<DancingNode> answer;
-    private int[][] solution;
+    private List<List<Integer>> answerRows;
 
     DancingLinks(boolean[][] cover) {
         header = makeDLXBoard(cover);
     }
 
     public void runSolver() {
-        answer = new LinkedList<>();
-        solution = null;
+        answer = new ArrayList<>();
+        answerRows = null;
         search(0);
     }
 
-    public int[][] getSolution() {
-        return solution;
+    /**
+     * The exact cover found by {@link #runSolver()}, or {@code null} if none exists:
+     * one entry per selected row, each listing that row's column indices in ascending order.
+     */
+    public List<List<Integer>> getAnswerRows() {
+        return answerRows;
     }
 
     private void search(int k) {
         if (header.R == header) {
-            solution = parseBoard(answer);
+            answerRows = toAnswerRows(answer);
             return;
         }
         ColumnNode c = selectColumnNodeHeuristic();
@@ -54,7 +60,7 @@ public class DancingLinks {
             }
 
             search(k + 1);
-            if (solution != null) return;
+            if (answerRows != null) return;
 
             r = answer.remove(answer.size() - 1);
             c = r.C;
@@ -109,25 +115,17 @@ public class DancingLinks {
         return headerNode;
     }
 
-    private int[][] parseBoard(List<DancingNode> answer) {
-        int[][] result = new int[SUDOKU_SIZE][SUDOKU_SIZE];
+    private static List<List<Integer>> toAnswerRows(List<DancingNode> answer) {
+        List<List<Integer>> rows = new ArrayList<>();
         for (DancingNode n : answer) {
-            DancingNode rcNode = n;
-            int min = Integer.parseInt(rcNode.C.name);
+            List<Integer> columns = new ArrayList<>();
+            columns.add(Integer.parseInt(n.C.name));
             for (DancingNode tmp = n.R; tmp != n; tmp = tmp.R) {
-                int val = Integer.parseInt(tmp.C.name);
-                if (val < min) {
-                    min = val;
-                    rcNode = tmp;
-                }
+                columns.add(Integer.parseInt(tmp.C.name));
             }
-            int ans1 = Integer.parseInt(rcNode.C.name);
-            int ans2 = Integer.parseInt(rcNode.R.C.name);
-            int r = ans1 / SUDOKU_SIZE;
-            int c = ans1 % SUDOKU_SIZE;
-            int num = (ans2 % SUDOKU_SIZE) + 1;
-            result[r][c] = num;
+            Collections.sort(columns);
+            rows.add(columns);
         }
-        return result;
+        return rows;
     }
 }
