@@ -51,7 +51,7 @@ Total: 729 rows × 324 columns. Algorithm X picks the column with fewest remaini
 ## Run
 
 ```bash
-./gradlew test              # 4 tests; both solvers must agree on the hard puzzle
+./gradlew test              # both solvers must agree on the hard puzzle
 ```
 
 ```java
@@ -68,7 +68,7 @@ Both `solve(int[][])` methods are non-mutating — they return a new 9×9 array 
 
 - JDK 25 toolchain
 - JUnit Jupiter 6.1
-- Gradle 9.5.1
+- Gradle 9.6.1
 
 No third-party dependencies in the main source set. Pure JDK.
 
