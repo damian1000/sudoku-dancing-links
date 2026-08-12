@@ -1,4 +1,4 @@
-package io.github.damian1000.sudoku.dancing;
+package com.damianhoward.sudoku.dancing;
 
 
 class ColumnNode extends DancingNode {
