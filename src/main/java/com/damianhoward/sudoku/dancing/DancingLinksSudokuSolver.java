@@ -1,4 +1,4 @@
-package io.github.damian1000.sudoku.dancing;
+package com.damianhoward.sudoku.dancing;
 
 import java.util.Arrays;
 import java.util.List;

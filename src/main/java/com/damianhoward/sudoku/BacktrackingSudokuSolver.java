@@ -1,4 +1,4 @@
-package io.github.damian1000.sudoku;
+package com.damianhoward.sudoku;
 
 import java.util.stream.IntStream;
 
